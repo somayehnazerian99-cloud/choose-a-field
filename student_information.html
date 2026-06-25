@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تکمیل اطلاعات داوطلب - انتخاب‌یار</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                        },
+                        secondary: {
+                            50: '#ecfeff',
+                            100: '#cffafe',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Vazirmatn -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="min-h-full flex flex-col justify-between text-slate-800 antialiased bg-slate-50">
+
+    <!-- Header -->
+    <header class="w-full border-b border-slate-200/80 glass-effect sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-primary-600 to-secondary-500 text-white shadow-md shadow-primary-500/20">
+                        <i class="fa-solid fa-graduation-cap text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-black bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">انتخاب‌یار</span>
+                    </div>
+                </div>
+                <a href="index.html" class="flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-primary-600 transition-all bg-slate-100 hover:bg-slate-200 py-2 px-4 rounded-xl">
+                    <i class="fa-solid fa-arrow-right"></i>
+                    بازگشت به خانه
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Form Container -->
+    <main class="flex-grow flex items-center justify-center px-4 py-12">
+        <div class="max-w-xl w-full bg-white rounded-3xl border border-slate-200/70 p-8 shadow-xl shadow-slate-200/50 space-y-8 relative overflow-hidden transition-all hover:shadow-2xl">
+            <!-- Decorative Glow background -->
+            <div class="absolute -top-24 -left-24 w-48 h-48 bg-primary-100/50 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-secondary-100/50 rounded-full blur-2xl pointer-events-none"></div>
+
+            <!-- Title Header -->
+            <div class="text-center space-y-2 relative z-10">
+                <span class="inline-flex items-center gap-1.5 rounded-full bg-primary-50 px-3 py-1 text-xs font-bold text-primary-700">
+                    <i class="fa-solid fa-user-pen"></i>
+                    پروفایل دانش‌آموز
+                </span>
+                <h1 class="text-2xl font-black text-slate-800">تکمیل اطلاعات داوطلب کنکور</h1>
+                <p class="text-slate-400 text-xs">برای بهره‌مندی از خدمات مشاوره هوشمند و تخمین رتبه، اطلاعات خود را تکمیل کنید.</p>
+            </div>
+
+            <!-- Form -->
+            <form id="student-form" onsubmit="saveStudentInfo(event)" class="space-y-6 relative z-10">
+                <!-- Name and Family -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-slate-600">نام و نام خانوادگی</label>
+                    <div class="relative">
+                        <input type="text" id="full-name" required placeholder="مثال: زهرا محمدی" 
+                               class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                        <i class="fa-solid fa-user absolute right-3.5 top-3.5 text-slate-400"></i>
+                    </div>
+                </div>
+
+                <!-- Gender -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-slate-600">جنسیت</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="flex items-center justify-center gap-2 border-2 border-slate-200 hover:border-primary-500 rounded-xl p-3 cursor-pointer transition-all bg-slate-50" id="gender-female-label">
+                            <input type="radio" name="gender" value="female" id="gender-female" required class="text-primary-500 focus:ring-primary-500">
+                            <span class="text-xs font-bold text-slate-700">دختر</span>
+                            <i class="fa-solid fa-venus text-rose-400"></i>
+                        </label>
+                        <label class="flex items-center justify-center gap-2 border-2 border-slate-200 hover:border-primary-500 rounded-xl p-3 cursor-pointer transition-all bg-slate-50" id="gender-male-label">
+                            <input type="radio" name="gender" value="male" id="gender-male" required class="text-primary-500 focus:ring-primary-500">
+                            <span class="text-xs font-bold text-slate-700">پسر</span>
+                            <i class="fa-solid fa-mars text-blue-400"></i>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Location: Province & City -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-600">استان</label>
+                        <select id="province" required onchange="handleProvinceChange()" 
+                                class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                            <option value="">انتخاب استان...</option>
+                            <option value="تهران">تهران</option>
+                            <option value="اصفهان">اصفهان</option>
+                            <option value="خراسان رضوی">خراسان رضوی</option>
+                            <option value="فارس">فارس</option>
+                            <option value="آذربایجان شرقی">آذربایجان شرقی</option>
+                            <option value="البرز">البرز</option>
+                            <option value="مازندران">مازندران</option>
+                            <option value="خوزستان">خوزستان</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-600">شهر</label>
+                        <input type="text" id="city" required placeholder="مثال: شیراز" 
+                               class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                    </div>
+                </div>
+
+                <!-- Exam Group -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-slate-600">گروه آزمایشی کنکور</label>
+                    <select id="exam-group" required 
+                            class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                        <option value="">انتخاب گروه آزمایشی...</option>
+                        <option value="tajrobi">علوم تجربی</option>
+                        <option value="riazi">علوم ریاضی و فنی</option>
+                        <option value="ensani">علوم انسانی</option>
+                        <option value="honar">هنر</option>
+                        <option value="zaban">زبان‌های خارجی</option>
+                    </select>
+                </div>
+
+                <!-- Contact Number -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-slate-600">شماره تماس (موبایل)</label>
+                    <div class="relative">
+                        <input type="tel" id="phone" required pattern="09[0-9]{9}" placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹" 
+                               class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all font-sans text-left dir-ltr">
+                        <i class="fa-solid fa-phone absolute right-3.5 top-3.5 text-slate-400"></i>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <button type="submit" class="w-full bg-gradient-to-r from-primary-600 to-secondary-500 hover:from-primary-700 hover:to-secondary-600 text-white font-bold py-4 px-4 rounded-xl text-sm transition-all shadow-md shadow-primary-500/15 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-circle-check"></i>
+                    ذخیره اطلاعات و شروع انتخاب رشته
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Custom Toast Notification -->
+    <div id="toast" class="fixed bottom-5 left-5 z-50 transform translate-y-10 opacity-0 pointer-events-none transition-all duration-300 bg-slate-950 text-white px-5 py-3.5 rounded-xl shadow-lg flex items-center gap-2.5 text-xs">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+        <span id="toast-message">اطلاعات شما با موفقیت ثبت شد.</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto px-4">
+            <span>© ۲۰۲۶ انتخاب‌یار. تمامی حقوق محفوظ است.</span>
+        </div>
+    </footer>
+
+    <!-- Logic -->
+    <script>
+        // Load existing student data if present
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedData = localStorage.getItem('student_info');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                document.getElementById('full-name').value = data.fullName || '';
+                document.getElementById('province').value = data.province || '';
+                document.getElementById('city').value = data.city || '';
+                document.getElementById('exam-group').value = data.examGroup || '';
+                document.getElementById('phone').value = data.phone || '';
+                if (data.gender === 'female') {
+                    document.getElementById('gender-female').checked = true;
+                    highlightGender('female');
+                } else if (data.gender === 'male') {
+                    document.getElementById('gender-male').checked = true;
+                    highlightGender('male');
+                }
+            }
+
+            // Real-time styling of active gender
+            document.getElementById('gender-female').addEventListener('change', () => highlightGender('female'));
+            document.getElementById('gender-male').addEventListener('change', () => highlightGender('male'));
+        });
+
+        function highlightGender(selected) {
+            const femaleLabel = document.getElementById('gender-female-label');
+            const maleLabel = document.getElementById('gender-male-label');
+            if (selected === 'female') {
+                femaleLabel.className = "flex items-center justify-center gap-2 border-2 border-primary-500 rounded-xl p-3 cursor-pointer transition-all bg-primary-50/40 text-primary-700";
+                maleLabel.className = "flex items-center justify-center gap-2 border-2 border-slate-200 hover:border-primary-500 rounded-xl p-3 cursor-pointer transition-all bg-slate-50";
+            } else {
+                maleLabel.className = "flex items-center justify-center gap-2 border-2 border-primary-500 rounded-xl p-3 cursor-pointer transition-all bg-primary-50/40 text-primary-700";
+                femaleLabel.className = "flex items-center justify-center gap-2 border-2 border-slate-200 hover:border-primary-500 rounded-xl p-3 cursor-pointer transition-all bg-slate-50";
+            }
+        }
+
+        function saveStudentInfo(event) {
+            event.preventDefault();
+            const fullName = document.getElementById('full-name').value;
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const province = document.getElementById('province').value;
+            const city = document.getElementById('city').value;
+            const examGroup = document.getElementById('exam-group').value;
+            const phone = document.getElementById('phone').value;
+
+            const studentData = { fullName, gender, province, city, examGroup, phone };
+            localStorage.setItem('student_info', JSON.stringify(studentData));
+
+            showToast("اطلاعات شما با موفقیت در سیستم ذخیره شد. در حال انتقال به پنل...", "success");
+
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 1800);
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMsg.innerText = message;
+            toastIcon.className = 'fa-solid';
+
+            if (type === 'success') {
+                toastIcon.classList.add('fa-circle-check', 'text-emerald-400');
+            } else {
+                toastIcon.classList.add('fa-triangle-exclamation', 'text-amber-400');
+            }
+
+            toast.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

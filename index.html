@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>انتخاب‌یار - سامانه هوشمند انتخاب رشته کنکور سراسری</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                        },
+                        secondary: {
+                            50: '#ecfeff',
+                            100: '#cffafe',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Vazirmatn -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght=100..900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col text-slate-800 antialiased">
+
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 z-40 w-full border-b border-slate-200/80 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-primary-600 to-secondary-500 text-white shadow-md shadow-primary-500/20">
+                        <i class="fa-solid fa-graduation-cap text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-black bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">انتخاب‌یار</span>
+                        <span class="hidden sm:inline-block text-xs text-slate-500 mr-2">سامانه هوشمند انتخاب رشته</span>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-1 space-x-reverse">
+                    <button onclick="switchTab('home')" class="nav-btn active px-4 py-2 rounded-lg text-sm font-medium transition-colors" id="nav-home">
+                        <i class="fa-solid fa-house ml-1.5"></i>صفحه اصلی
+                    </button>
+                    <button onclick="switchTab('predictor')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors" id="nav-predictor">
+                        <i class="fa-solid fa-calculator ml-1.5"></i>تخمین قبولی
+                    </button>
+                    <button onclick="switchTab('sheet')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors" id="nav-sheet">
+                        <i class="fa-solid fa-list-check ml-1.5"></i>فرم انتخاب رشته من
+                        <span id="badge-count" class="hidden bg-rose-500 text-white text-[10px] px-1.5 py-0.5 rounded-full mr-1">0</span>
+                    </button>
+                    <button onclick="switchTab('chatbot')" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors" id="nav-chatbot">
+                        <i class="fa-solid fa-robot ml-1.5"></i>مشاور هوش مصنوعی
+                        <span class="bg-primary-100 text-primary-700 text-[10px] px-1.5 py-0.5 rounded-full mr-1 font-bold">جدید</span>
+                    </button>
+                </nav>
+
+                <!-- Actions / Register link -->
+                <div class="flex items-center gap-2">
+                    <a href="student_information.html" id="user-info-btn" class="hidden sm:flex items-center gap-1.5 bg-primary-100 hover:bg-primary-200 text-primary-800 text-xs font-bold py-2 px-3.5 rounded-xl transition-all">
+                        <i class="fa-solid fa-user-gear"></i>
+                        <span id="header-user-name">ثبت اطلاعات داوطلب</span>
+                    </a>
+                    <button onclick="switchTab('chatbot')" class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition-all">
+                        <i class="fa-solid fa-comment-dots text-lg"></i>
+                        <span class="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-emerald-500 animate-ping"></span>
+                    </button>
+                    <button onclick="openHelpModal()" class="flex items-center justify-center h-10 w-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition-all" title="راهنمای استفاده">
+                        <i class="fa-solid fa-circle-question text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- ================= HOME TAB ================= -->
+        <section id="tab-home" class="tab-content space-y-12">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-tr from-primary-700 via-primary-600 to-secondary-500 text-white p-8 md:p-12 shadow-xl shadow-primary-900/10">
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1),transparent_50%)]"></div>
+                <div class="relative z-10 max-w-2xl space-y-6">
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white backdrop-blur-md">
+                        <span class="flex h-2 w-2 rounded-full bg-cyan-400"></span>
+                        به روز رسانی شده برای کنکور جدید
+                    </span>
+                    <h1 class="text-3xl md:text-5xl font-black leading-tight">آینده تحصیلی خود را با دانش و هوش مصنوعی بسازید</h1>
+                    <p class="text-slate-100 leading-relaxed text-sm md:text-base">
+                        «انتخاب‌یار» به شما کمک می‌کند با تحلیل رتبه، سهمیه و علایقتان، بهترین تصمیم را برای انتخاب رشته کنکور سراسری بگیرید. چیدمان هوشمند، شبیه‌ساز اولویت‌ها و مشاوره اختصاصی ۲۴ ساعته.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <button onclick="switchTab('predictor')" class="bg-white text-primary-700 hover:bg-slate-100 px-6 py-3.5 rounded-xl font-bold text-sm shadow-lg transition-all transform hover:-translate-y-0.5">
+                            <i class="fa-solid fa-wand-magic-sparkles ml-2"></i>شروع تخمین و پیشنهاد رشته
+                        </button>
+                        <a href="student_information.html" class="bg-primary-800/40 hover:bg-primary-800/60 border border-white/20 text-white px-6 py-3.5 rounded-xl font-bold text-sm backdrop-blur-sm transition-all transform hover:-translate-y-0.5 inline-flex items-center justify-center">
+                            <i class="fa-solid fa-user-pen ml-2"></i>تکمیل اطلاعات داوطلب
+                        </a>
+                    </div>
+                </div>
+                <!-- Decorative SVG graphics -->
+                <div class="absolute -bottom-10 -left-10 w-72 h-72 bg-white/5 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="absolute -top-20 -right-20 w-96 h-96 bg-secondary-400/20 rounded-full blur-3xl pointer-events-none"></div>
+            </div>
+
+            <!-- Features Cards Grid -->
+            <div class="space-y-6">
+                <div class="text-center max-w-xl mx-auto space-y-2">
+                    <h2 class="text-2xl font-extrabold text-slate-800">چرا انتخاب‌یار را انتخاب کنید؟</h2>
+                    <p class="text-slate-500 text-sm">مجموعه‌ای از ابزارهای هوشمند طراحی شده برای کاهش دغدغه‌ها و افزایش شانس موفقیت شما.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
+                    <div class="bg-white rounded-2xl border border-slate-200/60 p-6 shadow-sm hover:shadow-md transition-all group hover:-translate-y-1">
+                        <div class="h-12 w-12 rounded-xl bg-primary-50 text-primary-500 flex items-center justify-center mb-4 group-hover:bg-primary-500 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-chart-pie text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">تخمین دقیق و هوشمند</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed">با وارد کردن رتبه زیرگروه و منطقه خود، درصد قبولی در رشته‌ها و دانشگاه‌های مختلف کشور را به صورت شبیه‌سازی شده مشاهده کنید.</p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="bg-white rounded-2xl border border-slate-200/60 p-6 shadow-sm hover:shadow-md transition-all group hover:-translate-y-1">
+                        <div class="h-12 w-12 rounded-xl bg-secondary-50 text-secondary-500 flex items-center justify-center mb-4 group-hover:bg-secondary-500 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-route text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">فرست کلاس اولویت‌بندی</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed">رشته‌های دلخواهتان را در لیست فرضی وارد کنید، ترتیب آن‌ها را بکشید و رها کنید و در نهایت خروجی اکسل یا متنی دریافت کنید.</p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="bg-white rounded-2xl border border-slate-200/60 p-6 shadow-sm hover:shadow-md transition-all group hover:-translate-y-1">
+                        <div class="h-12 w-12 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center mb-4 group-hover:bg-amber-500 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-brain text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">مشاور ۲۴ ساعته هوشمند</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed">دستیار ما مبتنی بر مدل هوش مصنوعی فوق‌پیشرفته Gemini آماده پاسخ به تمام سوالات تخصصی شما پیرامون رشته‌ها و دانشگاه‌هاست.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Steps Section -->
+            <div class="bg-slate-100 rounded-3xl p-8 border border-slate-200/50">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                    <div class="space-y-3">
+                        <span class="text-xs font-bold text-primary-600 tracking-wider uppercase">راهنمای گام به گام</span>
+                        <h2 class="text-2xl font-black text-slate-800">چگونه انتخاب رشته کنیم؟</h2>
+                        <p class="text-slate-500 text-xs leading-relaxed">مراحل زیر به شما کمک می‌کند تا بدون استرس و با آگاهی کامل، بهترین انتخاب‌ها را ثبت نمایید.</p>
+                    </div>
+                    <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <a href="student_information.html" class="flex gap-4 items-start bg-white p-4 rounded-2xl border border-slate-200/40 hover:border-primary-300 transition-all">
+                            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-100 text-primary-600 font-extrabold shadow-sm">۱</span>
+                            <div class="space-y-1">
+                                <h4 class="font-bold text-sm text-slate-800">ثبت اطلاعات داوطلب</h4>
+                                <p class="text-xs text-slate-500">مشخصات تحصیلی و عمومی خود را ابتدا ثبت کنید.</p>
+                            </div>
+                        </a>
+                        <div class="flex gap-4 items-start bg-white p-4 rounded-2xl border border-slate-200/40">
+                            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-100 text-primary-600 font-extrabold shadow-sm">۲</span>
+                            <div class="space-y-1">
+                                <h4 class="font-bold text-sm text-slate-800">تخمین و شبیه‌سازی</h4>
+                                <p class="text-xs text-slate-500">رشته‌های دلخواهتان را با ابزار سنجش شانس قبولی مقایسه کنید.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start bg-white p-4 rounded-2xl border border-slate-200/40">
+                            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-100 text-primary-600 font-extrabold shadow-sm">۳</span>
+                            <div class="space-y-1">
+                                <h4 class="font-bold text-sm text-slate-800">دریافت خروجی</h4>
+                                <p class="text-xs text-slate-500">لیست اولویت‌بندی شده را به صورت نهایی بارگیری کنید.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PREDICTOR TAB ================= -->
+        <section id="tab-predictor" class="tab-content hidden space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Inputs panel -->
+                <div class="lg:col-span-1 bg-white rounded-2xl border border-slate-200/60 p-6 shadow-sm space-y-6">
+                    <div class="flex items-center gap-2 pb-4 border-b border-slate-100">
+                        <i class="fa-solid fa-sliders text-primary-500 text-lg"></i>
+                        <h2 class="text-lg font-bold text-slate-800">اطلاعات کارنامه کنکور</h2>
+                    </div>
+
+                    <!-- Exam Group -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-600">گروه آزمایشی</label>
+                        <select id="exam-group" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                            <option value="tajrobi">علوم تجربی</option>
+                            <option value="riazi">علوم ریاضی و فنی</option>
+                            <option value="ensani">علوم انسانی</option>
+                        </select>
+                    </div>
+
+                    <!-- Region -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-600">سهمیه منطقه</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button onclick="setQuota(1)" id="quota-1" class="quota-btn active bg-primary-50 border-2 border-primary-500 text-primary-700 py-2 px-3 rounded-xl text-xs font-bold transition-all">منطقه ۱</button>
+                            <button onclick="setQuota(2)" id="quota-2" class="quota-btn bg-slate-50 border-2 border-slate-200/60 text-slate-600 py-2 px-3 rounded-xl text-xs font-bold transition-all">منطقه ۲</button>
+                            <button onclick="setQuota(3)" id="quota-3" class="quota-btn bg-slate-50 border-2 border-slate-200/60 text-slate-600 py-2 px-3 rounded-xl text-xs font-bold transition-all">منطقه ۳</button>
+                        </div>
+                    </div>
+
+                    <!-- Rank -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-600">رتبه در سهمیه نهایی</label>
+                        <div class="relative">
+                            <input type="number" id="candidate-rank" placeholder="مثال: ۱۵۰۰" min="1" max="150000" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all font-bold">
+                            <i class="fa-solid fa-hashtag absolute right-3.5 top-3.5 text-slate-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- Province -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-600">استان بومی شما</label>
+                        <select id="home-province" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                            <option value="تهران">تهران</option>
+                            <option value="اصفهان">اصفهان</option>
+                            <option value="خراسان رضوی">خراسان رضوی</option>
+                            <option value="فارس">فارس</option>
+                            <option value="آذربایجان شرقی">آذربایجان شرقی</option>
+                            <option value="البرز">البرز</option>
+                            <option value="مازندران">مازندران</option>
+                            <option value="خوزستان">خوزستان</option>
+                        </select>
+                    </div>
+
+                    <!-- University Type Preferences -->
+                    <div class="space-y-3 pt-2">
+                        <label class="block text-xs font-bold text-slate-600">نوع دانشگاه‌های مد نظر</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2 text-xs text-slate-600 cursor-pointer">
+                                <input type="checkbox" id="univ-rwb" checked class="rounded border-slate-300 text-primary-600 focus:ring-primary-500">
+                                <span>روزانه و نوبت دوم (شبانه)</span>
+                            </label>
+                            <label class="flex items-center gap-2 text-xs text-slate-600 cursor-pointer">
+                                <input type="checkbox" id="univ-pardis" checked class="rounded border-slate-300 text-primary-600 focus:ring-primary-500">
+                                <span>پردیس خودگردان / ظرفیت مازاد</span>
+                            </label>
+                            <label class="flex items-center gap-2 text-xs text-slate-600 cursor-pointer">
+                                <input type="checkbox" id="univ-payam" class="rounded border-slate-300 text-primary-600 focus:ring-primary-500">
+                                <span>پیام نور و غیرانتفاعی</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- CTA Button -->
+                    <button onclick="calculatePredictions()" class="w-full bg-gradient-to-r from-primary-600 to-secondary-500 hover:from-primary-700 hover:to-secondary-600 text-white font-bold py-3.5 px-4 rounded-xl text-sm transition-all shadow-md shadow-primary-500/10 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-sparkles"></i>
+                        آنالیز و جستجوی شانس قبولی
+                    </button>
+                </div>
+
+                <!-- Results panel -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div id="prediction-intro" class="bg-slate-100 rounded-2xl border border-dashed border-slate-300 p-8 text-center flex flex-col items-center justify-center h-full min-h-[350px] space-y-4">
+                        <div class="h-16 w-16 rounded-full bg-slate-200 text-slate-400 flex items-center justify-center text-2xl animate-pulse">
+                            <i class="fa-solid fa-calculator"></i>
+                        </div>
+                        <h3 class="font-extrabold text-slate-700 text-lg">آماده پردازش اطلاعات شما</h3>
+                        <p class="text-slate-500 text-xs max-w-sm leading-relaxed">لطفاً مشخصات رتبه و سهمیه خود را در پنل راست پر کرده و دکمه «آنالیز» را کلیک کنید تا جدول تخمین شانس قبولی نمایش داده شود.</p>
+                    </div>
+
+                    <div id="prediction-results" class="hidden space-y-6">
+                        <!-- Summary Stats -->
+                        <div class="grid grid-cols-3 gap-4 bg-white rounded-2xl border border-slate-200/60 p-4 shadow-sm">
+                            <div class="text-center p-2">
+                                <span class="block text-xs text-slate-400 mb-1">رشته انتخابی شما</span>
+                                <span id="summary-group" class="text-sm font-bold text-slate-700">-</span>
+                            </div>
+                            <div class="text-center p-2 border-x border-slate-100">
+                                <span class="block text-xs text-slate-400 mb-1">رتبه کارنامه</span>
+                                <span id="summary-rank" class="text-sm font-bold text-slate-700">-</span>
+                            </div>
+                            <div class="text-center p-2">
+                                <span class="block text-xs text-slate-400 mb-1">شانس‌های شناسایی شده</span>
+                                <span id="summary-count" class="text-sm font-bold text-primary-600">-</span>
+                            </div>
+                        </div>
+
+                        <!-- Results Tabs (Optimistic, Realistic, Safe) -->
+                        <div class="space-y-4">
+                            <div class="flex border-b border-slate-200">
+                                <button onclick="filterResultTab('all')" id="res-tab-all" class="res-tab active border-b-2 border-primary-500 px-4 py-2.5 text-xs font-bold text-primary-600">همه فرصت‌ها</button>
+                                <button onclick="filterResultTab('high')" id="res-tab-high" class="res-tab px-4 py-2.5 text-xs font-bold text-slate-500 hover:text-slate-800">ایمن (بیش از ۸۰٪)</button>
+                                <button onclick="filterResultTab('medium')" id="res-tab-medium" class="res-tab px-4 py-2.5 text-xs font-bold text-slate-500 hover:text-slate-800">منطقی (۵۰٪ تا ۸۰٪)</button>
+                                <button onclick="filterResultTab('low')" id="res-tab-low" class="res-tab px-4 py-2.5 text-xs font-bold text-slate-500 hover:text-slate-800">خوش‌بینانه (زیر ۵۰٪)</button>
+                            </div>
+
+                            <!-- List of predicted majors -->
+                            <div id="predictions-list" class="space-y-4 max-h-[500px] overflow-y-auto pr-1">
+                                <!-- Cards injected here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SHEET TAB ================= -->
+        <section id="tab-sheet" class="tab-content hidden space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- My List view -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white rounded-2xl border border-slate-200/60 p-6 shadow-sm space-y-4">
+                        <div class="flex items-center justify-between pb-4 border-b border-slate-100 flex-wrap gap-2">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-list-check text-primary-500 text-lg"></i>
+                                <h2 class="text-lg font-bold text-slate-800">لیست انتخاب رشته فرضی من</h2>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="exportSheet()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-all">
+                                    <i class="fa-solid fa-download ml-1"></i>دانلود لیست
+                                </button>
+                                <button onclick="clearSheet()" class="bg-rose-50 hover:bg-rose-100 text-rose-600 px-3 py-1.5 rounded-lg text-xs font-bold transition-all">
+                                    <i class="fa-solid fa-trash-can ml-1"></i>پاک کردن همه
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Table of selections -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-right text-sm">
+                                <thead class="bg-slate-50 text-slate-500 text-xs">
+                                    <tr>
+                                        <th class="p-3 rounded-r-xl">اولویت</th>
+                                        <th class="p-3">کد رشته</th>
+                                        <th class="p-3">عنوان رشته و دانشگاه</th>
+                                        <th class="p-3">دوره</th>
+                                        <th class="p-3 rounded-l-xl text-center">عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sheet-items-body" class="divide-y divide-slate-100">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Empty state -->
+                        <div id="sheet-empty-state" class="py-12 text-center flex flex-col items-center justify-center space-y-3">
+                            <div class="h-12 w-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-folder-open"></i>
+                            </div>
+                            <p class="text-xs text-slate-500">هنوز هیچ رشته‌ای به فرم انتخاب خود اضافه نکرده‌اید.</p>
+                            <button onclick="switchTab('predictor')" class="text-xs text-primary-600 font-extrabold hover:underline">
+                                اضافه کردن از بخش تخمین قبولی <i class="fa-solid fa-arrow-left mr-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom code insertion / Search info -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="bg-white rounded-2xl border border-slate-200/60 p-6 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-sm">افزودن دستی کدرشته</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">اگر کدرشته خاصی را از دفترچه سنجش پیدا کرده‌اید، می‌توانید به صورت مستقیم با مشخصات دلخواه به لیست اضافه کنید.</p>
+                        
+                        <div class="space-y-3 pt-2">
+                            <div>
+                                <label class="block text-xs text-slate-500 mb-1">کد رشته ۵ رقمی</label>
+                                <input type="text" id="manual-code" placeholder="مثال: ۳۴۵۱۲" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-500 mb-1">عنوان رشته و دانشگاه</label>
+                                <input type="text" id="manual-title" placeholder="مثال: مهندسی کامپیوتر دانشگاه تهران" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-500 mb-1">نوع دوره</label>
+                                <select id="manual-type" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary-500">
+                                    <option value="روزانه">روزانه</option>
+                                    <option value="شبانه">نوبت دوم (شبانه)</option>
+                                    <option value="پردیس">پردیس خودگردان</option>
+                                    <option value="غیرانتفاعی">غیرانتفاعی</option>
+                                </select>
+                            </div>
+                            <button onclick="addManualItem()" class="w-full bg-slate-800 hover:bg-slate-950 text-white text-xs font-bold py-2.5 rounded-lg transition-all">
+                                <i class="fa-solid fa-plus ml-1"></i>افزودن به لیست اولویت‌ها
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CHATBOT TAB ================= -->
+        <section id="tab-chatbot" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[600px]">
+                <!-- Quick Prompts Panel -->
+                <div class="hidden lg:block lg:col-span-1 bg-white rounded-2xl border border-slate-200/60 p-5 shadow-sm space-y-4 h-full overflow-y-auto">
+                    <h3 class="font-extrabold text-sm text-slate-800 pb-2 border-b border-slate-100">پرسش‌های آماده و رایج</h3>
+                    <div class="space-y-2">
+                        <button onclick="sendQuickPrompt('تفاوت پردیس خودگردان و نوبت دوم چیست؟')" class="w-full text-right p-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-xs text-slate-600 transition-all border border-slate-100 leading-relaxed">
+                            <i class="fa-regular fa-lightbulb text-amber-500 ml-1.5"></i>تفاوت پردیس خودگردان و نوبت دوم چیست؟
+                        </button>
+                        <button onclick="sendQuickPrompt('بازار کار مهندسی کامپیوتر در مقایسه با صنایع چطور است؟')" class="w-full text-right p-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-xs text-slate-600 transition-all border border-slate-100 leading-relaxed">
+                            <i class="fa-regular fa-lightbulb text-amber-500 ml-1.5"></i>بازار کار مهندسی کامپیوتر در مقایسه با صنایع؟
+                        </button>
+                        <button onclick="sendQuickPrompt('چگونه شانس قبولی در رشته دندانپزشکی را محاسبه کنم؟')" class="w-full text-right p-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-xs text-slate-600 transition-all border border-slate-100 leading-relaxed">
+                            <i class="fa-regular fa-lightbulb text-amber-500 ml-1.5"></i>چگونه شانس قبولی دندانپزشکی را بسنجم?
+                        </button>
+                        <button onclick="sendQuickPrompt('شرایط مهم بومی‌گزینی در انتخاب رشته به چه شکل است؟')" class="w-full text-right p-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-xs text-slate-600 transition-all border border-slate-100 leading-relaxed">
+                            <i class="fa-regular fa-lightbulb text-amber-500 ml-1.5"></i>شرایط مهم بومی‌گزینی چیست؟
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Chat Room -->
+                <div class="lg:col-span-3 bg-white rounded-2xl border border-slate-200/60 shadow-sm flex flex-col h-full overflow-hidden">
+                    <!-- Chat Header -->
+                    <div class="bg-gradient-to-r from-primary-600 to-secondary-500 text-white p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center border border-white/20">
+                                <i class="fa-solid fa-robot text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-extrabold text-sm">دستیار هوشمند انتخاب رشته (Gemini AI)</h3>
+                                <span class="text-[10px] text-slate-200">هر سوالی درباره رتبه، دانشگاه‌ها و بازار کار دارید بپرسید.</span>
+                            </div>
+                        </div>
+                        <button onclick="clearChat()" class="text-xs hover:bg-white/20 p-2 rounded-lg transition-all" title="پاک کردن تاریخچه چت">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                    </div>
+
+                    <!-- Chat Messages Area -->
+                    <div id="chat-messages" class="flex-grow p-4 overflow-y-auto space-y-4 bg-slate-50/50">
+                        <!-- Bot intro -->
+                        <div class="flex gap-3 max-w-[85%]">
+                            <div class="h-8 w-8 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-robot text-xs"></i>
+                            </div>
+                            <div class="bg-white rounded-2xl rounded-tr-none p-3.5 border border-slate-200/60 shadow-sm text-xs leading-relaxed">
+                                سلام داوطلب عزیز! من دستیار هوشمند شما «انتخاب‌یار» هستم. شما می‌توانید کارنامه یا رتبه‌تان را وارد کنید یا در مورد بازار کار رشته‌ها و کیفیت دانشگاه‌ها از من بپرسید تا با کمک هوش مصنوعی دقیق‌ترین راهنمایی را دریافت کنید.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Input -->
+                    <div class="p-3 border-t border-slate-100 bg-white">
+                        <div class="flex gap-2">
+                            <input type="text" id="chat-input" onkeydown="handleChatKey(event)" placeholder="سوال خود را بنویسید (مثال: رتبم ۲۳۰۰ منطقه ۱ تجربی شده، کجاها قبول میشم؟)" class="flex-grow bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                            <button onclick="sendChatMessage()" id="chat-send-btn" class="bg-primary-600 hover:bg-primary-700 text-white rounded-xl px-5 py-3 text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm">
+                                <i class="fa-solid fa-paper-plane"></i>
+                                <span>ارسال</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Custom Notification Box (Toast) -->
+    <div id="toast" class="fixed bottom-5 left-5 z-50 transform translate-y-10 opacity-0 pointer-events-none transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg flex items-center gap-2.5 text-xs">
+        <i id="toast-icon" class="fa-solid fa-circle-info text-primary-400 text-sm"></i>
+        <span id="toast-message">پیام سیستم</span>
+    </div>
+
+    <!-- Help Modal Dialog -->
+    <div id="help-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+        <div class="bg-white rounded-2xl border border-slate-200 max-w-md w-full p-6 shadow-xl space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <h3 class="font-bold text-slate-800 text-sm">راهنمای استفاده از انتخاب‌یار</h3>
+                <button onclick="closeHelpModal()" class="text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="space-y-3 text-xs text-slate-600 leading-relaxed">
+                <p><strong>۱. تکمیل اطلاعات داوطلب:</strong> قبل از شروع، بهتر است مشخصات خود را ثبت کنید تا محاسبات و پیشنهادها دقیقاً بر اساس منطقه، جنسیت و سهمیه شما بهینه‌سازی شوند.</p>
+                <p><strong>۲. تخمین قبولی:</strong> در این بخش با وارد کردن رتبه و انتخاب گروه آزمایشی، شبیه‌ساز ما لیستی از کدرشته‌هایی که شانس پذیرش دارید را با کدهای رنگی نشان می‌دهد.</p>
+                <p><strong>۳. چیدمان و اولویت‌ها:</strong> برای ساخت فرم انتخابی خود، دکمه «افزودن به فرم» را در هر کارت بفشارید. سپس به منوی «فرم انتخاب رشته من» رفته و ترتیب آن‌ها را ویرایش یا دانلود کنید.</p>
+            </div>
+            <button onclick="closeHelpModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold py-2.5 rounded-lg transition-all">متوجه شدم</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                <span>© ۲۰۲۶ انتخاب‌یار. طراحی شده با عشق برای موفقیت دانش‌آموزان سرزمین‌مان.</span>
+            </div>
+            <div class="flex gap-4">
+                <a href="#" class="hover:text-primary-500">حریم خصوصی</a>
+                <a href="#" class="hover:text-primary-500">قوانین و مقررات</a>
+                <a href="#" class="hover:text-primary-500">پشتیبانی</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // System Config & State
+        const apiKey = ""; 
+        let currentQuota = 1;
+        let mySheet = [];
+
+        // Realistic Mock Dataset for testing recommendations
+        const mockDatabase = {
+            tajrobi: [
+                { code: '21034', title: 'پزشکی دانشگاه تهران', type: 'روزانه', minRank: 1, maxRank: 150 },
+                { code: '21055', title: 'پزشکی دانشگاه شهید بهشتی', type: 'روزانه', minRank: 50, maxRank: 250 },
+                { code: '21112', title: 'دندانپزشکی دانشگاه تهران', type: 'روزانه', minRank: 1, maxRank: 100 },
+                { code: '21220', title: 'داروسازی دانشگاه علوم پزشکی ایران', type: 'روزانه', minRank: 200, maxRank: 600 },
+                { code: '21455', title: 'پزشکی دانشگاه علوم پزشکی اصفهان', type: 'روزانه', minRank: 150, maxRank: 400 },
+                { code: '21560', title: 'پزشکی دانشگاه علوم پزشکی شیراز', type: 'روزانه', minRank: 100, maxRank: 350 },
+                { code: '21890', title: 'پرستاری دانشگاه علوم پزشکی تهران', type: 'روزانه', minRank: 1200, maxRank: 3500 },
+                { code: '21901', title: 'فیزیوتراپی دانشگاه شهید بهشتی', type: 'روزانه', minRank: 600, maxRank: 1100 },
+                { code: '22100', title: 'پزشکی پردیس خودگردان شهید بهشتی', type: 'پردیس', minRank: 400, maxRank: 1000 },
+                { code: '22304', title: 'پرستاری دانشگاه علوم پزشکی کرج', type: 'روزانه', minRank: 3000, maxRank: 7000 },
+                { code: '22411', title: 'علوم آزمایشگاهی دانشگاه سمنان', type: 'روزانه', minRank: 5000, maxRank: 11000 },
+                { code: '22550', title: 'پزشکی دانشگاه علوم پزشکی زاهدان', type: 'روزانه', minRank: 1200, maxRank: 2800 },
+                { code: '23000', title: 'مامایی دانشگاه علوم پزشکی بابل', type: 'روزانه', minRank: 4500, maxRank: 9500 }
+            ],
+            riazi: [
+                { code: '11005', title: 'مهندسی کامپیوتر دانشگاه صنعتی شریف', type: 'روزانه', minRank: 1, maxRank: 120 },
+                { code: '11024', title: 'مهندسی برق دانشگاه صنعتی شریف', type: 'روزانه', minRank: 10, maxRank: 180 },
+                { code: '11055', title: 'مهندسی کامپیوتر دانشگاه تهران', type: 'روزانه', minRank: 50, maxRank: 300 },
+                { code: '11112', title: 'مهندسی کامپیوتر دانشگاه صنعتی امیرکبیر', type: 'روزانه', minRank: 100, maxRank: 450 },
+                { code: '11200', title: 'مهندسی مکانیک دانشگاه علم و صنعت', type: 'روزانه', minRank: 400, maxRank: 950 },
+                { code: '11340', title: 'مهندسی عمران دانشگاه تهران', type: 'روزانه', minRank: 600, maxRank: 1500 },
+                { code: '11450', title: 'مهندسی صنایع دانشگاه صنعتی خواجه نصیر', type: 'روزانه', minRank: 800, maxRank: 1600 },
+                { code: '11670', title: 'مهندسی کامپیوتر دانشگاه اصفهان', type: 'روزانه', minRank: 1200, maxRank: 2800 },
+                { code: '11800', title: 'مهندسی برق دانشگاه فردوسی مشهد', type: 'روزانه', minRank: 1000, maxRank: 2500 },
+                { code: '12050', title: 'مهندسی مکانیک پردیس امیرکبیر', type: 'پردیس', minRank: 1800, maxRank: 4500 },
+                { code: '12400', title: 'مهندسی معماری دانشگاه هنر تهران', type: 'روزانه', minRank: 1500, maxRank: 3500 },
+                { code: '13100', title: 'ریاضیات و کاربردها دانشگاه تبریز', type: 'روزانه', minRank: 3000, maxRank: 9000 },
+                { code: '14500', title: 'مهندسی شیمی دانشگاه سمنان', type: 'روزانه', minRank: 5000, maxRank: 14000 }
+            ],
+            ensani: [
+                { code: '31001', title: 'حقوق دانشگاه تهران', type: 'روزانه', minRank: 1, maxRank: 80 },
+                { code: '31045', title: 'روانشناسی دانشگاه تهران', type: 'روزانه', minRank: 20, maxRank: 150 },
+                { code: '31080', title: 'حقوق دانشگاه شهید بهشتی', type: 'روزانه', minRank: 40, maxRank: 180 },
+                { code: '31200', title: 'روانشناسی دانشگاه علامه طباطبایی', type: 'روزانه', minRank: 100, maxRank: 400 },
+                { code: '31410', title: 'مدیریت مالی دانشگاه تهران', type: 'روزانه', minRank: 80, maxRank: 350 },
+                { code: '31502', title: 'حسابداری دانشگاه علامه طباطبایی', type: 'روزانه', minRank: 200, maxRank: 850 },
+                { code: '31770', title: 'حقوق دانشگاه شیراز', type: 'روزانه', minRank: 300, maxRank: 900 },
+                { code: '31900', title: 'جامعه‌شناسی دانشگاه تهران', type: 'روزانه', minRank: 150, maxRank: 700 },
+                { code: '32010', title: 'مشاوره دانشگاه خوارزمی', type: 'روزانه', minRank: 800, maxRank: 2200 },
+                { code: '32205', title: 'حقوق دانشگاه اصفهان', type: 'روزانه', minRank: 500, maxRank: 1400 },
+                { code: '32500', title: 'روانشناسی پردیس علامه طباطبایی', type: 'پردیس', minRank: 1200, maxRank: 3500 },
+                { code: '33044', title: 'ادبیات فارسی دانشگاه فردوسی مشهد', type: 'روزانه', minRank: 1000, maxRank: 4000 },
+                { code: '34100', title: 'جغرافیا دانشگاه یزد', type: 'روزانه', minRank: 4000, maxRank: 15000 }
+            ]
+        };
+
+        let currentActiveTab = 'home';
+        let latestCalculatedPredictions = [];
+
+        // Check if student information already exists in localStorage on startup
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedData = localStorage.getItem('student_info');
+            const userBtn = document.getElementById('user-info-btn');
+            const headerUserName = document.getElementById('header-user-name');
+
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                if (data.fullName) {
+                    headerUserName.innerText = data.fullName;
+                    userBtn.classList.remove('hidden');
+                    userBtn.classList.add('flex');
+                    // Pre-fill fields in predictor based on profile
+                    if (data.examGroup) {
+                        document.getElementById('exam-group').value = data.examGroup;
+                    }
+                    if (data.province) {
+                        document.getElementById('home-province').value = data.province;
+                    }
+                }
+            } else {
+                userBtn.classList.remove('hidden');
+                userBtn.classList.add('flex');
+                headerUserName.innerText = "ثبت اطلاعات داوطلب";
+            }
+
+            // Sync My Sheet count
+            const savedSheet = localStorage.getItem('user_sheet');
+            if (savedSheet) {
+                mySheet = JSON.parse(savedSheet);
+                updateSheetUI();
+            }
+        });
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            const targetTab = document.getElementById(`tab-${tabId}`);
+            if (targetTab) {
+                targetTab.classList.remove('hidden');
+            }
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-primary-50', 'text-primary-600', 'font-bold');
+                btn.classList.add('text-slate-600');
+            });
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.add('active', 'bg-primary-50', 'text-primary-600', 'font-bold');
+                activeBtn.classList.remove('text-slate-600');
+            }
+
+            currentActiveTab = tabId;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Set Quota region buttons active state
+        function setQuota(region) {
+            currentQuota = region;
+            document.querySelectorAll('.quota-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-primary-50', 'border-primary-500', 'text-primary-700');
+                btn.classList.add('bg-slate-50', 'border-slate-200/60', 'text-slate-600');
+            });
+            const activeBtn = document.getElementById(`quota-${region}`);
+            if (activeBtn) {
+                activeBtn.classList.add('active', 'bg-primary-50', 'border-primary-500', 'text-primary-700');
+                activeBtn.classList.remove('bg-slate-50', 'border-slate-200/60', 'text-slate-600');
+            }
+        }
+
+        // Custom Toast Dialog to replace browser alerts
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMsg.innerText = message;
+            toastIcon.className = 'fa-solid';
+
+            if (type === 'success') {
+                toastIcon.classList.add('fa-circle-check', 'text-emerald-400');
+            } else if (type === 'error') {
+                toastIcon.classList.add('fa-triangle-exclamation', 'text-rose-400');
+            } else {
+                toastIcon.classList.add('fa-circle-info', 'text-cyan-400');
+            }
+
+            toast.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 3000);
+        }
+
+        // Help Modal Controls
+        function openHelpModal() {
+            const modal = document.getElementById('help-modal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100');
+        }
+
+        function closeHelpModal() {
+            const modal = document.getElementById('help-modal');
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        // Predictor Logic
+        function calculatePredictions() {
+            const group = document.getElementById('exam-group').value;
+            const rankInput = document.getElementById('candidate-rank').value;
+            const rank = parseInt(rankInput);
+
+            if (!rankInput || isNaN(rank) || rank <= 0) {
+                showToast("لطفاً رتبه معتبر در سهمیه خود را وارد کنید.", "error");
+                return;
+            }
+
+            const database = mockDatabase[group];
+            if (!database) {
+                showToast("خطا در بارگیری اطلاعات گروه آزمایشی.", "error");
+                return;
+            }
+
+            const includeRwb = document.getElementById('univ-rwb').checked;
+            const includePardis = document.getElementById('univ-pardis').checked;
+            const includePayam = document.getElementById('univ-payam').checked;
+
+            // Simple prediction algorithm based on rank boundaries
+            latestCalculatedPredictions = database.map(item => {
+                let chance = 0;
+                let chanceText = "";
+                let chanceColorClass = "";
+                let chanceTag = "";
+
+                // Calculate chance percentage
+                if (rank <= item.minRank) {
+                    chance = 95; // highly safe
+                } else if (rank > item.maxRank) {
+                    // low chance
+                    const diff = rank - item.maxRank;
+                    if (diff < 500) {
+                        chance = 35; // optimistic
+                    } else {
+                        chance = 10; // extremely low
+                    }
+                } else {
+                    // medium realistic chance
+                    const totalRange = item.maxRank - item.minRank;
+                    const position = rank - item.minRank;
+                    chance = Math.round(100 - (position / totalRange) * 50); // scales 50% to 100%
+                }
+
+                // Adjust filter criteria for UI
+                if (chance >= 80) {
+                    chanceText = "ایمن / شانس بالا";
+                    chanceColorClass = "text-emerald-600 bg-emerald-50 border-emerald-200";
+                    chanceTag = "high";
+                } else if (chance >= 50) {
+                    chanceText = "منطقی / متوسط";
+                    chanceColorClass = "text-amber-600 bg-amber-50 border-amber-200";
+                    chanceTag = "medium";
+                } else {
+                    chanceText = "خوش‌بینانه / کم";
+                    chanceColorClass = "text-rose-600 bg-rose-50 border-rose-200";
+                    chanceTag = "low";
+                }
+
+                return { ...item, chance, chanceText, chanceColorClass, chanceTag };
+            });
+
+            // Filter out by types chosen
+            latestCalculatedPredictions = latestCalculatedPredictions.filter(item => {
+                if (item.type === 'روزانه' && !includeRwb) return false;
+                if (item.type === 'پردیس' && !includePardis) return false;
+                if (item.type === 'غیرانتفاعی' && !includePayam) return false;
+                return true;
+            });
+
+            // Render
+            document.getElementById('prediction-intro').classList.add('hidden');
+            document.getElementById('prediction-results').classList.remove('hidden');
+
+            // Set Stats
+            const groupMap = { tajrobi: 'علوم تجربی', riazi: 'ریاضی و فنی', ensani: 'علوم انسانی' };
+            document.getElementById('summary-group').innerText = groupMap[group];
+            document.getElementById('summary-rank').innerText = rank.toLocaleString('fa-IR');
+            document.getElementById('summary-count').innerText = latestCalculatedPredictions.length.toLocaleString('fa-IR') + ' مورد';
+
+            renderPredictionList(latestCalculatedPredictions);
+        }
+
+        function renderPredictionList(items) {
+            const listContainer = document.getElementById('predictions-list');
+            listContainer.innerHTML = '';
+
+            if (items.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="text-center py-10 bg-white rounded-2xl border border-slate-100">
+                        <p class="text-xs text-slate-400">هیچ کدرشته‌ای با شرایط فیلتر شما یافت نشد.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            items.forEach(item => {
+                const isAlreadyAdded = mySheet.some(s => s.code === item.code);
+                const buttonText = isAlreadyAdded ? "اضافه شده" : "افزودن به فرم";
+                const buttonClass = isAlreadyAdded ? "bg-slate-100 text-slate-400 cursor-not-allowed" : "bg-primary-600 hover:bg-primary-700 text-white";
+
+                const card = document.createElement('div');
+                card.className = "bg-white border border-slate-100 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm hover:shadow-md transition-all";
+                card.innerHTML = `
+                    <div class="space-y-1.5 flex-grow">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="bg-slate-100 text-slate-600 font-mono text-[11px] px-2 py-0.5 rounded-lg">${item.code}</span>
+                            <span class="text-xs font-bold text-slate-400">|</span>
+                            <span class="text-xs text-slate-500 font-semibold">${item.type}</span>
+                            <span class="border text-[10px] font-bold px-2 py-0.5 rounded-full ${item.chanceColorClass}">${item.chanceText} (${item.chance}٪)</span>
+                        </div>
+                        <h4 class="font-extrabold text-sm text-slate-800">${item.title}</h4>
+                    </div>
+                    <button onclick="addToSheet('${item.code}', '${item.title.replace(/'/g, "\\'")}', '${item.type}')" ${isAlreadyAdded ? 'disabled' : ''} class="w-full sm:w-auto text-xs font-bold px-4 py-2.5 rounded-lg transition-all ${buttonClass}">
+                        ${isAlreadyAdded ? '<i class="fa-solid fa-check ml-1"></i>' : '<i class="fa-solid fa-plus ml-1"></i>'}${buttonText}
+                    </button>
+                `;
+                listContainer.appendChild(card);
+            });
+        }
+
+        function filterResultTab(tag) {
+            document.querySelectorAll('.res-tab').forEach(tab => {
+                tab.className = "res-tab px-4 py-2.5 text-xs font-bold text-slate-500 hover:text-slate-800";
+            });
+            document.getElementById(`res-tab-${tag}`).className = "res-tab active border-b-2 border-primary-500 px-4 py-2.5 text-xs font-bold text-primary-600";
+
+            if (tag === 'all') {
+                renderPredictionList(latestCalculatedPredictions);
+            } else {
+                const filtered = latestCalculatedPredictions.filter(i => i.chanceTag === tag);
+                renderPredictionList(filtered);
+            }
+        }
+
+        // Sheet Logic
+        function addToSheet(code, title, type) {
+            if (mySheet.some(item => item.code === code)) {
+                showToast("این کدرشته قبلاً به فرم شما اضافه شده است.", "error");
+                return;
+            }
+
+            mySheet.push({ code, title, type });
+            localStorage.setItem('user_sheet', JSON.stringify(mySheet));
+            updateSheetUI();
+            showToast("به فرم انتخاب رشته افزوده شد.", "success");
+
+            // Re-render prediction list to show "Added" state if viewing
+            if (latestCalculatedPredictions.length > 0) {
+                renderPredictionList(latestCalculatedPredictions);
+            }
+        }
+
+        function updateSheetUI() {
+            const badge = document.getElementById('badge-count');
+            const emptyState = document.getElementById('sheet-empty-state');
+            const tbody = document.getElementById('sheet-items-body');
+
+            badge.innerText = mySheet.length;
+            if (mySheet.length > 0) {
+                badge.classList.remove('hidden');
+                emptyState.classList.add('hidden');
+            } else {
+                badge.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+            }
+
+            tbody.innerHTML = '';
+            mySheet.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.className = "hover:bg-slate-50/50 transition-colors";
+                row.innerHTML = `
+                    <td class="p-3 font-bold text-slate-500 text-xs">${index + 1}</td>
+                    <td class="p-3 font-mono text-xs text-primary-600 font-bold">${item.code}</td>
+                    <td class="p-3 font-semibold text-xs text-slate-800">${item.title}</td>
+                    <td class="p-3 text-xs text-slate-500">${item.type}</td>
+                    <td class="p-3 text-center">
+                        <div class="flex items-center justify-center gap-1">
+                            <button onclick="moveItem(${index}, -1)" class="p-1.5 hover:bg-slate-100 rounded text-slate-500" title="انتقال به بالا">
+                                <i class="fa-solid fa-angle-up"></i>
+                            </button>
+                            <button onclick="moveItem(${index}, 1)" class="p-1.5 hover:bg-slate-100 rounded text-slate-500" title="انتقال به پایین">
+                                <i class="fa-solid fa-angle-down"></i>
+                            </button>
+                            <button onclick="removeFromSheet(${index})" class="p-1.5 hover:bg-rose-50 text-rose-500 rounded" title="حذف">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function moveItem(index, direction) {
+            const targetIndex = index + direction;
+            if (targetIndex < 0 || targetIndex >= mySheet.length) return;
+
+            // Swap
+            const temp = mySheet[index];
+            mySheet[index] = mySheet[targetIndex];
+            mySheet[targetIndex] = temp;
+
+            localStorage.setItem('user_sheet', JSON.stringify(mySheet));
+            updateSheetUI();
+        }
+
+        function removeFromSheet(index) {
+            mySheet.splice(index, 1);
+            localStorage.setItem('user_sheet', JSON.stringify(mySheet));
+            updateSheetUI();
+            showToast("کدرشته با موفقیت حذف شد.", "success");
+
+            if (latestCalculatedPredictions.length > 0) {
+                renderPredictionList(latestCalculatedPredictions);
+            }
+        }
+
+        function clearSheet() {
+            if (mySheet.length === 0) return;
+            mySheet = [];
+            localStorage.removeItem('user_sheet');
+            updateSheetUI();
+            showToast("کل فرم پاک‌سازی شد.", "success");
+
+            if (latestCalculatedPredictions.length > 0) {
+                renderPredictionList(latestCalculatedPredictions);
+            }
+        }
+
+        function addManualItem() {
+            const code = document.getElementById('manual-code').value.trim();
+            const title = document.getElementById('manual-title').value.trim();
+            const type = document.getElementById('manual-type').value;
+
+            if (!code || code.length !== 5 || isNaN(parseInt(code))) {
+                showToast("کد رشته باید ۵ رقمی و عددی باشد.", "error");
+                return;
+            }
+            if (!title) {
+                showToast("عنوان رشته را وارد کنید.", "error");
+                return;
+            }
+
+            addToSheet(code, title, type);
+            // reset form
+            document.getElementById('manual-code').value = '';
+            document.getElementById('manual-title').value = '';
+        }
+
+        function exportSheet() {
+            if (mySheet.length === 0) {
+                showToast("لیست شما خالی است و امکان خروجی گرفتن وجود ندارد.", "error");
+                return;
+            }
+
+            let text = "اولویت\tکد رشته\tرشته و دانشگاه\tنوع دوره\r\n";
+            mySheet.forEach((item, index) => {
+                text += `${index + 1}\t${item.code}\t${item.title}\t${item.type}\r\n`;
+            });
+
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = "entekhab_yar_form.txt";
+            link.click();
+            showToast("لیست متنی دانلود شد.", "success");
+        }
+
+        // AI Chatbot simulation
+        function sendQuickPrompt(promptText) {
+            document.getElementById('chat-input').value = promptText;
+            sendChatMessage();
+        }
+
+        function handleChatKey(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const query = input.value.trim();
+            if (!query) return;
+
+            // Render User bubble
+            renderChatBubble(query, 'user');
+            input.value = '';
+
+            // Loading / Typying simulation
+            const messagesArea = document.getElementById('chat-messages');
+            const loadingBubble = document.createElement('div');
+            loadingBubble.id = 'chat-loading';
+            loadingBubble.className = "flex gap-3 max-w-[85%] animate-pulse";
+            loadingBubble.innerHTML = `
+                <div class="h-8 w-8 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+                <div class="bg-slate-100 rounded-2xl p-3 text-xs text-slate-500">
+                    در حال پاسخ‌نویسی مشاور هوشمند...
+                </div>
+            `;
+            messagesArea.appendChild(loadingBubble);
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+
+            // Call to simulated intelligence
+            setTimeout(() => {
+                document.getElementById('chat-loading').remove();
+                let answer = "با تشکر از پرسش شما داوطلب گرامی. برای تحلیل دقیق‌تر، پیشنهاد می‌کنم ابتدا اطلاعات رتبه و منطقه خود را در تب «تخمین قبولی» وارد کنید تا دقیق‌ترین آنالیز علمی متناسب با کارنامه‌تان را دریافت کنید.";
+                
+                // Smart keyword mapping
+                if (query.includes('پردیس خودگردان') || query.includes('نوبت دوم')) {
+                    answer = "تفاوت اصلی پردیس خودگردان و نوبت دوم (شبانه) در میزان شهریه و تعهد خدمت است: <br>۱. پردیس خودگردان شهریه بسیار بالاتری دارد و معمولاً در خارج از پردیس اصلی دانشگاه تشکیل می‌شود اما تعهد خدمت دولتی ندارد.<br>۲. نوبت دوم (شبانه) شهریه ملایم‌تری دارد، در همان کلاس‌های روزانه برگزار می‌شود و مدرک آن تفاوتی با روزانه ندارد.";
+                } else if (query.includes('مهندسی کامپیوتر') || query.includes('صنایع')) {
+                    answer = "رشته مهندسی کامپیوتر به دلیل رشد چشمگیر فناوری و هوش مصنوعی بازار کار بسیار داغ، امکان هوم‌آفیس (دورکاری) و پتانسیل بالای درآمد دلاری دارد. مهندسی صنایع بیشتر متمرکز بر سیستم‌ها، تحلیل مالی و بهینه‌سازی فرآیند کارخانجات است. اگر به برنامه‌نویسی و کارهای چالش‌برانگیز تکنولوژی علاقه‌مندید کامپیوتر، و اگر مدیریت سیستم‌ها را می‌پسندید صنایع عالی است.";
+                } else if (query.includes('بومی‌گزینی')) {
+                    answer = "بومی‌گزینی در کنکور به چهار صورت کشوری، استانی، ناحیه‌ای و قطبی انجام می‌شود. در رشته‌های دارای بومی‌گزینی استانی، ناحیه‌ای یا قطبی، شانس قبولی داوطلبانی که در آن اقلیم زندگی می‌کنند بسیار بالاتر است (تا سقف ۷۰ تا ۸۰ درصد سهمیه پذیرش متعلق به داوطلبان بومی است). حتماً موقعیت جغرافیایی استان خود را جدی بگیرید.";
+                } else if (query.includes('دندانپزشکی')) {
+                    answer = "برای محاسبه شانس قبولی دندانپزشکی، به رتبه در سهمیه منطقه (بهترین رتبه زیرگروه ۱ سابق) نیاز داریم. در منطقه ۱ رتبه‌های زیر ۴۰۰، منطقه ۲ رتبه‌های زیر ۷۰۰ و منطقه ۳ رتبه‌های زیر ۵۰۰ شانس قبولی روزانه بسیار بالایی دارند.";
+                }
+
+                renderChatBubble(answer, 'bot');
+            }, 1200);
+        }
+
+        function renderChatBubble(text, sender) {
+            const messagesArea = document.getElementById('chat-messages');
+            const bubble = document.createElement('div');
+            
+            if (sender === 'user') {
+                bubble.className = "flex gap-3 justify-end max-w-[85%] mr-auto";
+                bubble.innerHTML = `
+                    <div class="bg-primary-600 text-white rounded-2xl rounded-tl-none p-3.5 shadow-sm text-xs leading-relaxed">
+                        ${text}
+                    </div>
+                    <div class="h-8 w-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-user text-xs"></i>
+                    </div>
+                `;
+            } else {
+                bubble.className = "flex gap-3 max-w-[85%]";
+                bubble.innerHTML = `
+                    <div class="h-8 w-8 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-robot text-xs"></i>
+                    </div>
+                    <div class="bg-white rounded-2xl rounded-tr-none p-3.5 border border-slate-200/60 shadow-sm text-xs leading-relaxed text-slate-700">
+                        ${text}
+                    </div>
+                `;
+            }
+
+            messagesArea.appendChild(bubble);
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+        }
+
+        function clearChat() {
+            const messagesArea = document.getElementById('chat-messages');
+            messagesArea.innerHTML = `
+                <div class="flex gap-3 max-w-[85%]">
+                    <div class="h-8 w-8 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-robot text-xs"></i>
+                    </div>
+                    <div class="bg-white rounded-2xl rounded-tr-none p-3.5 border border-slate-200/60 shadow-sm text-xs leading-relaxed">
+                        سلام مجدد! آماده پاسخگویی به سوالات شما هستم.
+                    </div>
+                </div>
+            `;
+            showToast("تاریخچه چت بازنشانی شد.");
+        }
+    </script>
+</body>
+</html>
