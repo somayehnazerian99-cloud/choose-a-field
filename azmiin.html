@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آزمون رغبت‌سنجی هالند - انتخاب‌یار</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                        },
+                        secondary: {
+                            50: '#ecfeff',
+                            100: '#cffafe',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Vazirmatn -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="min-h-full flex flex-col justify-between text-slate-800 antialiased bg-slate-50">
+
+    <!-- Header -->
+    <header class="w-full border-b border-slate-200/80 glass-effect sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-primary-600 to-secondary-500 text-white shadow-md shadow-primary-500/20">
+                        <i class="fa-solid fa-compass text-lg animate-spin-slow"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-black bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">انتخاب‌یار</span>
+                        <span class="hidden sm:inline-block text-xs text-slate-400 mr-2">آزمون هدایت تحصیلی و شغلی هالند</span>
+                    </div>
+                </div>
+                <a href="index.html" class="flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-primary-600 transition-all bg-slate-100 hover:bg-slate-200 py-2 px-4 rounded-xl">
+                    <i class="fa-solid fa-arrow-right"></i>
+                    بازگشت به خانه
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow flex items-center justify-center px-4 py-12">
+        <div class="max-w-3xl w-full bg-white rounded-3xl border border-slate-200/70 p-6 md:p-10 shadow-xl shadow-slate-200/50 space-y-8 relative overflow-hidden">
+            <!-- Decorative background glows -->
+            <div class="absolute -top-24 -left-24 w-48 h-48 bg-primary-100/40 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-secondary-100/40 rounded-full blur-2xl pointer-events-none"></div>
+
+            <!-- Intro / Start State -->
+            <div id="quiz-intro" class="text-center space-y-6 py-6 relative z-10">
+                <div class="mx-auto h-20 w-20 rounded-2xl bg-primary-50 text-primary-600 flex items-center justify-center text-3xl shadow-lg shadow-primary-100/50">
+                    <i class="fa-solid fa-compass-drafting"></i>
+                </div>
+                <div class="space-y-2">
+                    <h1 class="text-2xl md:text-3xl font-black text-slate-800">آزمون رغبت‌سنجی شغلی هالند (RIASEC)</h1>
+                    <p class="text-slate-500 text-xs md:text-sm max-w-lg mx-auto leading-relaxed">
+                        این سنجش جهانی به شما کمک می‌کند تا تیپ شخصیتی خود را از بین ۶ گروه (واقع‌گرا، جستجوگر، هنری، اجتماعی، کارآفرین و قراردادی) کشف کرده و بهترین رشته‌های دانشگاهی متناسب با خود را بشناسید.
+                    </p>
+                </div>
+                <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 max-w-md mx-auto grid grid-cols-3 gap-4 text-center text-xs">
+                    <div>
+                        <span class="block font-black text-primary-600 text-base">۲۴</span>
+                        <span class="text-slate-400">سوال کوتاه</span>
+                    </div>
+                    <div class="border-x border-slate-200">
+                        <span class="block font-black text-primary-600 text-base">۴ دقیقه</span>
+                        <span class="text-slate-400">میانگین زمان</span>
+                    </div>
+                    <div>
+                        <span class="block font-black text-primary-600 text-base">هوشمند</span>
+                        <span class="text-slate-400">پیشنهاد رشته</span>
+                    </div>
+                </div>
+                <button onclick="startQuiz()" class="bg-gradient-to-r from-primary-600 to-secondary-500 hover:from-primary-700 hover:to-secondary-600 text-white font-bold py-3.5 px-8 rounded-xl text-sm transition-all shadow-md shadow-primary-500/20 inline-flex items-center gap-2">
+                    شروع آزمون هوشمند رغبت‌سنجی
+                    <i class="fa-solid fa-circle-play"></i>
+                </button>
+            </div>
+
+            <!-- Active Quiz State (Hidden by default) -->
+            <div id="quiz-active" class="hidden space-y-6 relative z-10">
+                <!-- Progress Header -->
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                    <span class="font-bold">پیشرفت آزمون: <span id="current-question-num" class="text-primary-600">۱</span> از ۲۴</span>
+                    <span id="percent-complete" class="font-mono">۰٪</span>
+                </div>
+                <!-- Progress Bar -->
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                    <div id="progress-bar-fill" class="bg-gradient-to-r from-primary-500 to-secondary-500 h-full transition-all duration-300" style="width: 4%;"></div>
+                </div>
+
+                <!-- Question Card -->
+                <div class="bg-slate-50/50 border border-slate-200/60 rounded-2xl p-6 md:p-8 min-h-[140px] flex items-center justify-center text-center">
+                    <h2 id="question-text" class="text-base md:text-lg font-black text-slate-800 leading-relaxed">در حال بارگذاری سوال...</h2>
+                </div>
+
+                <!-- Multiple Choices -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="choice-buttons-container">
+                    <!-- Dynamic Choices loaded via JS -->
+                </div>
+
+                <!-- Navigation -->
+                <div class="flex justify-between items-center pt-4">
+                    <button id="prev-btn" onclick="prevQuestion()" disabled class="text-xs font-bold text-slate-400 hover:text-slate-700 disabled:opacity-40 disabled:pointer-events-none flex items-center gap-1">
+                        <i class="fa-solid fa-arrow-right"></i>
+                        سوال قبلی
+                    </button>
+                    <span class="text-[11px] text-slate-400">آرا و پاسخ‌های شما به صورت ناشناس پردازش می‌شوند.</span>
+                </div>
+            </div>
+
+            <!-- Results State (Hidden by default) -->
+            <div id="quiz-results" class="hidden space-y-8 relative z-10">
+                <div class="text-center space-y-2">
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">
+                        <i class="fa-solid fa-circle-check animate-pulse"></i>
+                        نتایج آماده تحلیل است
+                    </span>
+                    <h2 class="text-2xl font-black text-slate-800">تیپ شخصیتی و رغبت‌سنجی شما</h2>
+                    <p class="text-slate-400 text-xs">بر اساس استاندارد کدهای هالند (RIASEC)، ۳ رغبت برتر شما استخراج شد.</p>
+                </div>
+
+                <!-- Results Grid (Scores breakdown & Careers) -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Left: Top 3 Chart Breakdown -->
+                    <div class="md:col-span-1 bg-slate-50 rounded-2xl border border-slate-100 p-5 space-y-4">
+                        <h3 class="font-bold text-xs text-slate-700 pb-2 border-b border-slate-200/60">نمودار تمایلات و رغبت‌ها</h3>
+                        <div id="scores-chart-list" class="space-y-3.5">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Right: Recommended Careers & Majors -->
+                    <div class="md:col-span-2 space-y-4">
+                        <div class="bg-gradient-to-tr from-primary-600 to-secondary-500 rounded-2xl text-white p-5 shadow-lg">
+                            <span class="text-[10px] text-primary-100 font-bold tracking-wider">کد هالند نهایی شما:</span>
+                            <h4 id="holland-code-display" class="text-2xl font-black mt-1 tracking-widest">-</h4>
+                            <p id="holland-desc-display" class="text-xs leading-relaxed mt-2 opacity-90">درحال تحلیل...</p>
+                        </div>
+
+                        <!-- Universities Majors and job Suggestions -->
+                        <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-3 shadow-sm">
+                            <h4 class="font-bold text-xs text-slate-600 flex items-center gap-1.5">
+                                <i class="fa-solid fa-graduation-cap text-primary-500"></i>
+                                رشته‌های دانشگاهی پیشنهادی:
+                            </h4>
+                            <div id="recommended-majors" class="flex flex-wrap gap-2">
+                                <!-- Dynamic tags -->
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl border border-slate-200 p-5 space-y-3 shadow-sm">
+                            <h4 class="font-bold text-xs text-slate-600 flex items-center gap-1.5">
+                                <i class="fa-solid fa-briefcase text-secondary-500"></i>
+                                فرصت‌های شغلی و بازارهای کار هدف:
+                            </h4>
+                            <div id="recommended-careers" class="flex flex-wrap gap-2">
+                                <!-- Dynamic tags -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Final action buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 pt-4 border-t border-slate-100">
+                    <a href="index.html" class="flex-grow bg-primary-600 hover:bg-primary-700 text-white font-bold py-3.5 px-4 rounded-xl text-xs transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-house"></i>
+                        انتقال به خانه و بررسی تراز قبولی‌ها
+                    </a>
+                    <button onclick="restartQuiz()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3.5 px-6 rounded-xl text-xs transition-all">
+                        تکرار مجدد آزمون
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto px-4">
+            <span>© ۲۰۲۶ انتخاب‌یار. تمامی حقوق محفوظ است.</span>
+        </div>
+    </footer>
+
+    <script>
+        // Quiz Questions & Category Map
+        // Categories: R = Realistic, I = Investigative, A = Artistic, S = Social, E = Enterprising, C = Conventional
+        const questions = [
+            { id: 1, text: "تعمیر کردن وسایل برقی یا مکانیکی خراب در خانه", cat: "R" },
+            { id: 2, text: "کار با ابزارها و ساختن چیزهای چوبی یا فلزی", cat: "R" },
+            { id: 3, text: "فعالیت‌های ورزشی و بدنی در فضای باز", cat: "R" },
+            { id: 4, text: "کارهای فنی، مونتاژ قطعات فیزیکی یا باغبانی", cat: "R" },
+            
+            { id: 5, text: "حل کردن پازل‌ها، معماها و مسائل پیچیده ریاضی", cat: "I" },
+            { id: 6, text: "مطالعه درباره نحوه کارکرد جهان، علم فیزیک، نجوم یا بیولوژی", cat: "I" },
+            { id: 7, text: "تحقیق علمی تجربی در آزمایشگاه و بررسی میکروسکوپی", cat: "I" },
+            { id: 8, text: "برنامه‌نویسی و تحلیل علمی کلان داده‌ها", cat: "I" },
+
+            { id: 9, text: "نوشتن داستان، شعر، یا وبلاگ‌نویسی خلاقانه و هنری", cat: "A" },
+            { id: 10, text: "طراحی سنتی، نقاشی، عکاسی یا کارهای گرافیکی کامپیوتری", cat: "A" },
+            { id: 11, text: "نواختن یک ساز موسیقی یا آهنگ‌سازی تفننی", cat: "A" },
+            { id: 12, text: "بازیگری در تئاتر، نویسندگی نمایشنامه یا طراحی دکوراسیون خلاقانه", cat: "A" },
+
+            { id: 13, text: "آموزش دادن و درس دادن به دیگران یا برگزاری کارگاه‌های آموزشی", cat: "S" },
+            { id: 14, text: "کمک کردن به افراد نیازمند، بیماران یا فعالیت در امور عام‌المنفعه", cat: "S" },
+            { id: 15, text: "کار گروهی منسجم و برقراری ارتباط صمیمی و عاطفی با افراد جدید", cat: "S" },
+            { id: 16, text: "مشاوره دادن به دوستان نزدیک در مورد تصمیمات حساس و سرنوشت‌ساز زندگی", cat: "S" },
+
+            { id: 17, text: "راه‌اندازی یک کسب‌وکار کوچک استارتاپی یا فروش محصولات", cat: "E" },
+            { id: 18, text: "مدیریت، سرپرستی و رهبری یک گروه یا پروژه بزرگ تیمی", cat: "E" },
+            { id: 19, text: "متقاعد کردن دیگران برای خرید یک کالا یا پذیرش ایده‌های ذهنی شما", cat: "E" },
+            { id: 20, text: "ریسک کردن هدفمند به منظور رسیدن به سود مالی مناسب یا موفقیت‌های بزرگ", cat: "E" },
+
+            { id: 21, text: "سازماندهی اسناد، فایل‌ها و مدیریت منظم و دقیق حساب‌های مالی خانگی یا شرکتی", cat: "C" },
+            { id: 22, text: "کار با آمارهای عددی، جداول اکسل و مستندات قانونی اداری", cat: "C" },
+            { id: 23, text: "برنامه‌ریزی روزانه کاملاً منظم و پایبندی به چارچوب‌ها و قوانین مشخص", cat: "C" },
+            { id: 24, text: "بررسی دقیق گزارش‌ها برای یافتن کوچک‌ترین خطاهای املایی، نگارشی یا محاسباتی", cat: "C" }
+        ];
+
+        // Choice Options
+        const choices = [
+            { text: "اصلاً علاقه‌ ندارم", score: 1, color: "hover:border-rose-400 hover:bg-rose-50/20 text-slate-700" },
+            { text: "کمی علاقه‌مندم", score: 2, color: "hover:border-amber-400 hover:bg-amber-50/20 text-slate-700" },
+            { text: "علاقه‌مندم", score: 3, color: "hover:border-primary-400 hover:bg-primary-50/20 text-slate-700" },
+            { text: "بسیار علاقه‌مندم", score: 4, color: "hover:border-emerald-400 hover:bg-emerald-50/20 text-slate-700" }
+        ];
+
+        // Detailed RIASEC translations and traits
+        const riasecDetails = {
+            R: { name: "واقع‌گرا (Realistic)", icon: "fa-wrench", desc: "عمل‌گرا، فنی و عاشق کار فیزیکی، کار دستی با ابزارها و حل مسائل مکانیکی عملی.", majors: ["مهندسی مکانیک", "مهندسی عمران", "مهندسی برق", "مهندسی کامپیوتر سخت‌افزار", "مهندسی کشاورزی", "هوافضا"], jobs: ["مهندس طراح سخت‌افزار", "سرپرست کارگاه ساختمانی", "تکنسین فنی شبکه", "خلبان تجاری", "متخصص متالورژی"] },
+            I: { name: "جستجوگر (Investigative)", icon: "fa-microscope", desc: "تحلیل‌گر، کنجکاو، علمی و عاشق فرمول‌ها، پازل‌ها، کدنویسی، منطق و واکاوی پدیده‌ها.", majors: ["علوم کامپیوتر (هوش مصنوعی)", "پزشکی عمومی", "بیوتکنولوژی", "فیزیک هسته‌ای", "شیمی آزمایشگاهی", "ریاضیات کاربردی"], jobs: ["دانشمند علوم داده", "پزشک متخصص", "محقق و پژوهشگر دانشگاهی", "برنامه‌نویس بک‌اند", "تحلیل‌گر سیستم"] },
+            A: { name: "هنری (Artistic)", icon: "fa-palette", desc: "خلاق، آزاداندیش، مستقل، علاقه‌مند به کار بدون چارچوب، هنر، عکاسی، طراحی، ادبیات و تصویرسازی.", majors: ["طراحی گرافیک", "مهندسی معماری", "سینما و بازیگری", "ادبیات فارسی/نمایشی", "موسیقی", "عکاسی تجاری"], jobs: ["طراح رابط کاربری (UI/UX)", "آرتیست خلاق سه‌بعدی", "کپی‌رایتر تبلیغاتی", "معمار مستقل", "کارگردان هنری"] },
+            S: { name: "اجتماعی (Social)", icon: "fa-hands-holding-child", desc: "همدل، حامی، برون‌گرا، مشتاق آموزش به دیگران، کمک به رفع مشکلات روحی، مشاوره‌ای و خدمات به مردم.", majors: ["روانشناسی", "روابط عمومی", "جامعه‌شناسی", "پرستاری و مامایی", "علوم تربیتی", "مددکاری اجتماعی"], jobs: ["مشاور تحصیلی و تحول فردی", "مدیر منابع انسانی", "مدرس یا معلم", "متخصص خدمات مشتریان", "پرستار بخش مراقبت"] },
+            E: { name: "کارآفرین (Enterprising)", icon: "fa-chart-line", desc: "رهبر، جسور، جاه‌طلب، عاشق قدرت کلام، ریسک مالی، فروش، استارتاپ‌ها، تریبون‌ها و متقاعدسازی.", majors: ["مدیریت مالی", "حقوق و وکالت", "مدیریت بازرگانی", "مدیریت استارتاپ‌ها", "اقتصاد بازرگانی", "مهندسی صنایع"], jobs: ["بنیان‌گذار استارتاپ", "وکیل پایه یک", "مدیر بازاریابی و فروش", "بروکر بورس و بازار سرمایه", "مشاور ارشد کسب‌وکار"] },
+            C: { name: "قراردادی (Conventional)", icon: "fa-folder-open", desc: "سازمان‌یافته، دقیق، متمرکز روی جزئیات، عاشق اعداد، جدول‌ها، چارت‌های سازمانی، دفاتر حساب و قانون‌مندی.", majors: ["حسابداری علمی", "مدیریت دولتی", "آمار و مدل‌سازی", "مهندسی صنایع گرایش بهینه‌سازی", "علوم آرشیوی و مدیریت اسناد"], jobs: ["حسابرس ارشد مالی", "بانکدار و تحلیل‌گر اعتبارات", "مدیر امور اداری", "کارشناس تضمین کیفیت", "دیپلمات یا کارمند رسمی دفتر اسناد"] }
+        };
+
+        let currentQuestionIndex = 0;
+        let userAnswers = {}; // map of questionId -> selected score
+
+        function startQuiz() {
+            document.getElementById('quiz-intro').classList.add('hidden');
+            document.getElementById('quiz-active').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const currentQ = questions[currentQuestionIndex];
+            document.getElementById('question-text').innerText = currentQ.text;
+            document.getElementById('current-question-num').innerText = (currentQuestionIndex + 1);
+            
+            // Calculate Progress Percentage
+            const percent = Math.round((currentQuestionIndex / questions.length) * 100);
+            document.getElementById('percent-complete').innerText = `${percent}٪`;
+            document.getElementById('progress-bar-fill').style.width = `${percent === 0 ? 4 : percent}%`;
+
+            // Active Next / Prev Buttons style
+            document.getElementById('prev-btn').disabled = (currentQuestionIndex === 0);
+
+            // Populate buttons
+            const choiceContainer = document.getElementById('choice-buttons-container');
+            choiceContainer.innerHTML = '';
+
+            choices.forEach(ch => {
+                const isSelected = userAnswers[currentQ.id] === ch.score;
+                const activeStyle = isSelected ? "border-primary-500 bg-primary-50/50 text-primary-700 ring-2 ring-primary-500/10 font-black" : "border-slate-200 bg-white";
+                
+                const btn = document.createElement('button');
+                btn.className = `w-full border-2 p-3 text-xs font-semibold rounded-xl transition-all duration-200 text-right flex items-center justify-between ${activeStyle} ${ch.color}`;
+                btn.innerHTML = `
+                    <span>${ch.text}</span>
+                    <i class="fa-solid ${isSelected ? 'fa-circle-dot text-primary-600' : 'fa-circle text-slate-200'} text-[13px]"></i>
+                `;
+                btn.onclick = () => selectChoice(currentQ.id, ch.score);
+                choiceContainer.appendChild(btn);
+            });
+        }
+
+        function selectChoice(questionId, score) {
+            userAnswers[questionId] = score;
+            
+            // Smooth next navigation
+            if (currentQuestionIndex < questions.length - 1) {
+                setTimeout(() => {
+                    currentQuestionIndex++;
+                    loadQuestion();
+                }, 200);
+            } else {
+                // Last question complete - transition to show results
+                setTimeout(() => {
+                    processResults();
+                }, 300);
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            userAnswers = {};
+            document.getElementById('quiz-results').classList.add('hidden');
+            document.getElementById('quiz-active').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function processResults() {
+            document.getElementById('quiz-active').classList.add('hidden');
+            document.getElementById('quiz-results').classList.remove('hidden');
+
+            // Initialize categories score to 0
+            const scores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
+            
+            // Sum scores
+            questions.forEach(q => {
+                const score = userAnswers[q.id] || 1; // Default to 1 if skipped somehow
+                scores[q.cat] += score;
+            });
+
+            // Convert to percentages (Max possible score per category is 16: 4 questions * 4 max score)
+            // Min score is 4 (4 questions * 1 score)
+            // Scale between 0 to 100 based on standard calculations
+            const scaledScores = {};
+            Object.keys(scores).forEach(key => {
+                const val = scores[key];
+                const rawPercent = Math.round(((val - 4) / 12) * 100);
+                scaledScores[key] = Math.max(10, rawPercent); // Maintain a minimum of 10% for layout aesthetics
+            });
+
+            // Find top 3 categories
+            const sortedCategories = Object.keys(scaledScores).sort((a, b) => scaledScores[b] - scaledScores[a]);
+            const primaryCode = sortedCategories.slice(0, 3).join('');
+
+            // Save results to local storage so home page or advisor chat can read them
+            const hollandPayload = {
+                code: primaryCode,
+                detailedScores: scaledScores,
+                topTraits: sortedCategories.slice(0, 3).map(k => riasecDetails[k].name.split(" ")[0])
+            };
+            localStorage.setItem('holland_results', JSON.stringify(hollandPayload));
+
+            // Render Results GUI
+            document.getElementById('holland-code-display').innerText = primaryCode;
+            
+            // Generate description based on primary traits
+            const firstTrait = riasecDetails[sortedCategories[0]];
+            const secondTrait = riasecDetails[sortedCategories[1]];
+            document.getElementById('holland-desc-display').innerHTML = `
+                شما عمدتاً شخصیتی <strong>${firstTrait.name.split(" ")[0]}</strong> و سپس <strong>${secondTrait.name.split(" ")[0]}</strong> دارید. 
+                این بدین معناست که ${firstTrait.desc} و به‌شدت پذیرای فعالیت‌های حوزه تفکر، خلاقیت یا خدمت هدفمند هستید.
+            `;
+
+            // Render scores chart list
+            const chartContainer = document.getElementById('scores-chart-list');
+            chartContainer.innerHTML = '';
+
+            sortedCategories.forEach((catKey, idx) => {
+                const info = riasecDetails[catKey];
+                const pct = scaledScores[catKey];
+                const isTop3 = idx < 3;
+                const bgBarClass = isTop3 ? 'bg-gradient-to-l from-primary-500 to-secondary-500' : 'bg-slate-300';
+                const opacityStyle = isTop3 ? 'opacity-100' : 'opacity-60';
+
+                const barElement = document.createElement('div');
+                barElement.className = `space-y-1 ${opacityStyle}`;
+                barElement.innerHTML = `
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="font-bold flex items-center gap-1.5 text-slate-700">
+                            <i class="fa-solid ${info.icon} text-[11px] text-primary-500"></i>
+                            ${info.name.split(" ")[0]}
+                        </span>
+                        <span class="font-mono text-slate-500">${pct}%</span>
+                    </div>
+                    <div class="w-full bg-slate-200/60 h-2 rounded-full overflow-hidden">
+                        <div class="${bgBarClass} h-full transition-all duration-1000" style="width: ${pct}%;"></div>
+                    </div>
+                `;
+                chartContainer.appendChild(barElement);
+            });
+
+            // Populate Recommended Majors & Careers
+            const majorsContainer = document.getElementById('recommended-majors');
+            majorsContainer.innerHTML = '';
+            
+            // Collect unique recommended majors from top 3 categories
+            const uniqueMajors = new Set();
+            const uniqueCareers = new Set();
+
+            sortedCategories.slice(0, 3).forEach(cat => {
+                riasecDetails[cat].majors.forEach(m => uniqueMajors.add(m));
+                riasecDetails[cat].jobs.forEach(j => uniqueCareers.add(j));
+            });
+
+            // Append Majors tags
+            uniqueMajors.forEach(major => {
+                const tag = document.createElement('span');
+                tag.className = "bg-primary-50 text-primary-700 border border-primary-100 text-xs font-bold px-3 py-1.5 rounded-xl transition-all hover:bg-primary-100 cursor-default";
+                tag.innerText = major;
+                majorsContainer.appendChild(tag);
+            });
+
+            // Append Careers tags
+            const careersContainer = document.getElementById('recommended-careers');
+            careersContainer.innerHTML = '';
+            uniqueCareers.forEach(job => {
+                const tag = document.createElement('span');
+                tag.className = "bg-secondary-50 text-secondary-700 border border-secondary-100 text-xs font-bold px-3 py-1.5 rounded-xl transition-all hover:bg-secondary-100 cursor-default";
+                tag.innerText = job;
+                careersContainer.appendChild(tag);
+            });
+        }
+    </script>
+</body>
+</html>
